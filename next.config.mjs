@@ -7,11 +7,11 @@ const withMDX = mdx({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export", // Required for GitHub Pages static export
+  // Removed output: "export" -> Vercel handles full SSR and dynamic routes!
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   transpilePackages: ["next-mdx-remote"],
   images: {
-    unoptimized: true, // Required for static hosting on GitHub Pages
+    // Removed unoptimized: true -> Vercel optimizes images automatically!
     remotePatterns: [
       {
         protocol: "https",
