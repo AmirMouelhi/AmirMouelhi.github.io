@@ -224,7 +224,7 @@ export default function SkillsPage() {
                       height={56}
                       style={{ objectFit: "contain" }}
                     />
-                    <Text variant="body-default-s" align="center" weight="medium">
+                    <Text variant="body-default-s" align="center">
                       {skill.name}
                     </Text>
                   </Column>
