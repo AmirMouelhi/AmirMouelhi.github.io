@@ -29,9 +29,6 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   }));
 }
 
-// Disable static generation for this route when there are no posts
-export const dynamic = 'force-dynamic';
-
 export async function generateMetadata({
   params,
 }: {
