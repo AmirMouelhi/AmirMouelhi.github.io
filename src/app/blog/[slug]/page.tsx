@@ -24,14 +24,13 @@ import { ShareSection } from "@/components/blog/ShareSection";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const posts = getPosts(["src", "app", "blog", "posts"]);
-  // Return a dummy param if no posts exist to prevent build error
-  if (posts.length === 0) {
-    return [{ slug: "placeholder" }];
-  }
   return posts.map((post) => ({
     slug: post.slug,
   }));
 }
+
+// Disable static generation for this route when there are no posts
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,
