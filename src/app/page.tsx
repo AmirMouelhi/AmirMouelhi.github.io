@@ -10,11 +10,14 @@ import {
   Schema,
   Meta,
   Line,
+  Icon,
+  IconButton,
 } from "@once-ui-system/core";
-import { home, about, person, baseURL, routes } from "@/resources";
-import { Mailchimp } from "@/components";
+import { home, about, person, baseURL, rotatingRoles } from "@/resources";
 import { Projects } from "@/components/work/Projects";
-import { Posts } from "@/components/blog/Posts";
+import { UpcomingProjects } from "@/components/work/UpcomingProjects";
+import { upcomingProjects, social } from "@/resources";
+import { TextRotator } from "@/components/TextRotator";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -27,6 +30,10 @@ export async function generateMetadata() {
 }
 
 export default function Home() {
+  const nameParts = person.name.split(" ");
+  const firstName = nameParts[0];
+  const lastName = nameParts.slice(1).join(" ");
+
   return (
     <Column maxWidth="m" gap="xl" paddingY="12" horizontal="center">
       <Schema
@@ -42,89 +49,209 @@ export default function Home() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Column fillWidth horizontal="center" gap="m">
-        <Column maxWidth="s" horizontal="center" align="center">
-          {home.featured.display && (
-            <RevealFx
-              fillWidth
-              horizontal="center"
-              paddingTop="16"
-              paddingBottom="32"
-              paddingLeft="12"
-            >
-              <Badge
-                background="brand-alpha-weak"
-                paddingX="12"
-                paddingY="4"
-                onBackground="neutral-strong"
-                textVariant="label-default-s"
-                arrow={false}
-                href={home.featured.href}
-              >
-                <Row paddingY="2">{home.featured.title}</Row>
-              </Badge>
-            </RevealFx>
-          )}
-          <RevealFx translateY="4" fillWidth horizontal="center" paddingBottom="16">
-            <Heading wrap="balance" variant="display-strong-l">
-              {home.headline}
-            </Heading>
-          </RevealFx>
-          <RevealFx translateY="8" delay={0.2} fillWidth horizontal="center" paddingBottom="32">
-            <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
-              {home.subline}
+
+      {/* HERO SECTION - Inspired by taqui-786 */}
+      <Row
+        fillWidth
+        gap="xl"
+        vertical="center"
+        s={{ direction: "column" }}
+        paddingX="l"
+      >
+        {/* LEFT SIDE - Text Content */}
+        <Column flex={1} gap="m" s={{ horizontal: "center" }}>
+          <RevealFx translateY="4">
+            <Text variant="heading-default-m" onBackground="neutral-weak">
+              Hello, I&apos;m
             </Text>
           </RevealFx>
-          <RevealFx paddingTop="12" delay={0.4} horizontal="center" paddingLeft="12">
-            <Button
-              id="about"
-              data-border="rounded"
-              href={about.path}
-              variant="secondary"
-              size="m"
-              weight="default"
-              arrowIcon
+
+          <RevealFx translateY="4" delay={0.1}>
+            <Heading
+              variant="display-strong-xl"
+              style={{
+                background: "linear-gradient(135deg, var(--brand-medium) 0%, var(--accent-medium) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
             >
-              <Row gap="8" vertical="center" paddingRight="4">
-                {about.avatar.display && (
-                  <Avatar
-                    marginRight="8"
-                    style={{ marginLeft: "-0.75rem" }}
-                    src={person.avatar}
-                    size="m"
+              {firstName}
+            </Heading>
+          </RevealFx>
+
+          <RevealFx translateY="4" delay={0.15}>
+            <Heading
+              variant="display-strong-xl"
+              onBackground="neutral-strong"
+            >
+              {lastName}
+            </Heading>
+          </RevealFx>
+
+          <RevealFx translateY="4" delay={0.2}>
+            <TextRotator items={rotatingRoles} prefix="I am a" />
+          </RevealFx>
+
+          <RevealFx translateY="4" delay={0.25}>
+            <Text
+              variant="body-default-l"
+              onBackground="neutral-weak"
+              style={{ maxWidth: "500px" }}
+            >
+              A passionate developer from Tunisia crafting scalable web solutions
+              with modern technologies. I transform complex challenges into
+              user-friendly applications.
+            </Text>
+          </RevealFx>
+
+          {/* Social Links */}
+          <RevealFx translateY="4" delay={0.3}>
+            <Row gap="12" marginTop="m">
+              {social
+                .filter((item) => item.essential)
+                .map((item) => (
+                  <IconButton
+                    key={item.name}
+                    href={item.link}
+                    icon={item.icon}
+                    size="l"
+                    variant="secondary"
+                    tooltip={item.name}
                   />
-                )}
-                {about.title}
-              </Row>
-            </Button>
+                ))}
+            </Row>
+          </RevealFx>
+
+          {/* CTA Buttons */}
+          <RevealFx translateY="4" delay={0.35}>
+            <Row gap="16" marginTop="l" wrap>
+              <Button
+                href="/projects"
+                variant="primary"
+                size="l"
+                prefixIcon="grid"
+              >
+                View My Work
+              </Button>
+              <Button
+                href="/contact"
+                variant="secondary"
+                size="l"
+                prefixIcon="email"
+              >
+                Get In Touch
+              </Button>
+            </Row>
           </RevealFx>
         </Column>
-      </Column>
-      <RevealFx translateY="16" delay={0.6}>
+
+        {/* RIGHT SIDE - Avatar/Image */}
+        <Column
+          flex={1}
+          horizontal="center"
+          vertical="center"
+          s={{ hide: true }}
+        >
+          <RevealFx translateY="4" delay={0.2}>
+            <div
+              style={{
+                position: "relative",
+                width: "350px",
+                height: "350px",
+                borderRadius: "50%",
+                overflow: "hidden",
+                border: "4px solid var(--brand-alpha-medium)",
+                boxShadow: "0 0 60px var(--brand-alpha-weak)",
+              }}
+            >
+              <Avatar
+                src={person.avatar}
+                size="custom"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
+          </RevealFx>
+        </Column>
+      </Row>
+
+      {/* Featured Badge */}
+      {home.featured.display && (
+        <RevealFx translateY="8" delay={0.4}>
+          <Badge
+            background="brand-alpha-weak"
+            paddingX="16"
+            paddingY="8"
+            onBackground="neutral-strong"
+            textVariant="label-default-m"
+            arrow={false}
+            href={home.featured.href}
+          >
+            <Row gap="12" vertical="center">
+              {home.featured.title}
+            </Row>
+          </Badge>
+        </RevealFx>
+      )}
+
+      {/* Divider */}
+      <Row fillWidth horizontal="center" marginY="xl">
+        <Line maxWidth={300} />
+      </Row>
+
+      {/* Featured Projects Section with Carousel */}
+      <RevealFx translateY="16" delay={0.2}>
         <Projects range={[1, 1]} />
       </RevealFx>
-      {routes["/blog"] && (
-        <Column fillWidth gap="24" marginBottom="l">
-          <Row fillWidth paddingRight="64">
-            <Line maxWidth={48} />
+
+      {/* Divider */}
+      <Row fillWidth horizontal="center" marginY="xl">
+        <Line maxWidth={300} />
+      </Row>
+
+      {/* Skills Preview Section */}
+      <RevealFx translateY="8">
+        <Column fillWidth gap="m" paddingX="l" horizontal="center">
+          <Heading as="h2" variant="heading-strong-xl" align="center">
+            Tech Stack
+          </Heading>
+          <Text onBackground="neutral-weak" align="center" marginBottom="m">
+            Technologies I work with on a daily basis
+          </Text>
+          <Row gap="16" wrap horizontal="center">
+            {["React", "Vue.js", "Laravel", "Node.js", "MongoDB", "MySQL"].map(
+              (tech) => (
+                <Badge
+                  key={tech}
+                  background="neutral-alpha-weak"
+                  onBackground="neutral-strong"
+                  paddingX="16"
+                  paddingY="8"
+                  arrow={false}
+                >
+                  {tech}
+                </Badge>
+              )
+            )}
           </Row>
-          <Row fillWidth gap="24" marginTop="40" s={{ direction: "column" }}>
-            <Row flex={1} paddingLeft="l" paddingTop="24">
-              <Heading as="h2" variant="display-strong-xs" wrap="balance">
-                Latest from the blog
-              </Heading>
-            </Row>
-            <Row flex={3} paddingX="20">
-              <Posts range={[1, 2]} columns="2" />
-            </Row>
-          </Row>
-          <Row fillWidth paddingLeft="64" horizontal="end">
-            <Line maxWidth={48} />
-          </Row>
+          <Button
+            href="/skills"
+            variant="secondary"
+            size="m"
+            style={{ marginTop: "var(--static-space-24)" }}
+          >
+            View All Skills
+          </Button>
         </Column>
-      )}
-      <Projects range={[2]} />
-      <Mailchimp />
+      </RevealFx>
+
+      {/* Divider */}
+      <Row fillWidth horizontal="center" marginY="xl">
+        <Line maxWidth={300} />
+      </Row>
+
+      {/* Upcoming Projects Section */}
+      <UpcomingProjects projects={upcomingProjects} />
     </Column>
   );
 }

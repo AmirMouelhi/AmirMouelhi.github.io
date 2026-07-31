@@ -8,6 +8,8 @@ export {
   blog,
   work,
   gallery,
+  upcomingProjects,
+  rotatingRoles,
 } from "./content";
 
 export {

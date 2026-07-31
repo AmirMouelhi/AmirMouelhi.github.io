@@ -13,15 +13,20 @@ import {
 } from "@/types";
 import { home, person, social } from "./content";
 
-// IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://demo.magic-portfolio.com";
+// Your domain address - used for SEO in meta tags and schema
+const baseURL: string = "https://amirmouelhi.github.io";
 
 const routes: RoutesConfig = {
   "/": true,
   "/about": true,
-  "/work": true,
-  "/blog": true,
-  "/gallery": true,
+  "/projects": true,
+  "/skills": true,
+  "/education": true,
+  "/contact": true,
+  "/more": true,
+  "/blog": false,
+  "/gallery": false,
+  "/work": false,
 };
 
 const display: DisplayConfig = {
